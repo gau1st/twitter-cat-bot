@@ -52,7 +52,6 @@ function tweetItWithImageFromUrl(url, text) {
    base64.encode(url, options, function (err, b64image) {
       if (err) {
          console.log(err);
-         letsGetStarted();
       } else {
          T.post('media/upload', { media_data: b64image }, function(err, data, response) {
 
@@ -74,13 +73,11 @@ function tweetItWithImageFromUrl(url, text) {
 
                      T.post('statuses/update', params, function (err, data, response) {
                         console.log(data);
-                        letsGetStarted();
                      })
                   })
 
                } else {
                   console.log(err);
-                  letsGetStarted();
                }
             });
          });
