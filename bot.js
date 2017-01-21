@@ -9,7 +9,7 @@ const download = require('download-file')
 const config = require("./config");
 
 const T = new Twit(config);
-const urlXml = "http://thecatapi.com/api/images/get?format=xml&type=gif";
+const urlXml = "http://thecatapi.com/api/images/get?format=xml";
 const woeiid = 1;
 
 
@@ -172,4 +172,4 @@ setInterval(function() {
    });
 
 
-}, 1000*30);
+}, 1000*600);
