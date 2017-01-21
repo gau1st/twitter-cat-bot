@@ -182,4 +182,4 @@ setInterval(function() {
      tweetItWithImageFromUrl(imageUrl, "Miaww Miaww..."+ emoji.emojify(':heart: :heart:')+"\n\n\n\n\nsource : "+imageUrl);
    });
 
-}, 1000*30);
+}, 1000*900);
