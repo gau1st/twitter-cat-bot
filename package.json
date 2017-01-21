@@ -18,7 +18,6 @@
   "author": "Gilang Esha Gautama",
   "license": "ISC",
   "dependencies": {
-    "image-downloader": "^2.0.3",
     "node-base64-image": "^1.0.3",
     "node-emoji": "^1.5.1",
     "twit": "^2.2.5",
