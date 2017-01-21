@@ -5,7 +5,7 @@ const emoji = require('node-emoji');
 const base64 = require('node-base64-image');
 const xmlParseString = require('xml2js').parseString;
 const http = require('http');
-const download = require('download-file')
+const download = require('download-file');
 const config = require("./config");
 
 const T = new Twit(config);
@@ -69,7 +69,8 @@ function tweetItWithImageFromUrl(url, text) {
                      var trending = data[0].trends;
 
                      // now we can reference the media and post a tweet (media will attach to the tweet)
-                     var params = { status: text+"\n\n"+trending[0].name+" "+trending[1].name+" "+trending[2].name, media_ids: [mediaIdStr] };
+                     // var params = { status: text+"\n\n"+trending[0].name+" "+trending[1].name+" "+trending[2].name, media_ids: [mediaIdStr] };
+                     var params = { status: text, media_ids: [mediaIdStr] };
 
                      T.post('statuses/update', params, function (err, data, response) {
                         console.log(data);
@@ -115,7 +116,8 @@ function tweetItWithGif(text) {
                }
 
                // now we can reference the media and post a tweet (media will attach to the tweet)
-               var params = { status: text+"\n\n"+trending[0].name+" "+trending[1].name+" "+trending[2].name, media_ids: [mediaIdStr] };
+               // var params = { status: text+"\n\n"+trending[0].name+" "+trending[1].name+" "+trending[2].name, media_ids: [mediaIdStr] };
+               var params = { status: text, media_ids: [mediaIdStr] };
 
                T.post('statuses/update', params, function (err, data, response) {
                   console.log(data);
@@ -171,11 +173,11 @@ function letsGetStarted() {
                letsGetStarted();
             } else{
                console.log("yahoo!");
-               tweetItWithGif("Miaww Miaww..."+ emoji.emojify(':heart: :heart:')+"\n\n\n\n\nsource : "+imageUrl);
+               tweetItWithGif("#kitten #cat #kittenevriday #cute"+ emoji.emojify(':heart: :heart:')+"\n\n\n\n\nsource : "+imageUrl);
             }
          });
       } else {
-         tweetItWithImageFromUrl(imageUrl, "Miaww Miaww..."+ emoji.emojify(':heart: :heart:')+"\n\n\n\n\nsource : "+imageUrl);
+         tweetItWithImageFromUrl(imageUrl, "#kitten #cat #kittenevriday #cute"+ emoji.emojify(':heart: :heart:')+"\n\n\n\n\nsource : "+imageUrl);
       }
    });
 }
