@@ -10,7 +10,7 @@ const config = require("./config");
 
 const T = new Twit(config);
 const urlXml = "http://thecatapi.com/api/images/get?format=xml&type=gif";
-const woeiid = 1;
+const woeid = 23424846;
 
 
 //
@@ -52,6 +52,7 @@ function tweetItWithImageFromUrl(url, text) {
    base64.encode(url, options, function (err, b64image) {
       if (err) {
          console.log(err);
+         letsGetStarted();
       } else {
          T.post('media/upload', { media_data: b64image }, function(err, data, response) {
 
@@ -64,7 +65,7 @@ function tweetItWithImageFromUrl(url, text) {
             T.post('media/metadata/create', meta_params, function (err, data, response) {
                if (!err) {
                   // Find Wordwide Trends
-                  T.get('trends/place', { id : 	woeiid }, function(err, data, response) {
+                  T.get('trends/place', { id : 	woeid }, function(err, data, response) {
                      var trending = data[0].trends;
 
                      // now we can reference the media and post a tweet (media will attach to the tweet)
@@ -72,11 +73,13 @@ function tweetItWithImageFromUrl(url, text) {
 
                      T.post('statuses/update', params, function (err, data, response) {
                         console.log(data);
+                        letsGetStarted();
                      })
                   })
 
                } else {
                   console.log(err);
+                  letsGetStarted();
                }
             });
          });
@@ -104,8 +107,12 @@ function tweetItWithGif(text) {
       T.post('media/metadata/create', meta_params, function (err, data, response) {
          if (!err) {
             // Find Wordwide Trends
-            T.get('trends/place', { id : 	woeiid }, function(err, data, response) {
+            T.get('trends/place', { id : 	woeid }, function(err, data, response) {
                var trending = data[0].trends;
+
+               for (var i = 0; i < trending.length; i++) {
+                  console.log("--"+trending[i].name);
+               }
 
                // now we can reference the media and post a tweet (media will attach to the tweet)
                var params = { status: text+"\n\n"+trending[0].name+" "+trending[1].name+" "+trending[2].name, media_ids: [mediaIdStr] };
@@ -117,6 +124,7 @@ function tweetItWithGif(text) {
 
          } else {
             console.log(err);
+            letsGetStarted();
          }
       });
    });
@@ -134,13 +142,12 @@ stream.on('follow', function (event) {
    }
 });
 
-
-setInterval(function() {
-
+function letsGetStarted() {
    xmlToJson(urlXml, function(err, data) {
       if (err) {
          // Handle this however you like
          return console.err(err);
+         letsGetStarted();
       }
 
       // Do whatever you want with the data here
@@ -161,6 +168,7 @@ setInterval(function() {
          download(imageUrl, options, function(err){
             if (err) {
                console.log(err);
+               letsGetStarted();
             } else{
                console.log("yahoo!");
                tweetItWithGif("Miaww Miaww..."+ emoji.emojify(':heart: :heart:')+"\n\n\n\n\nsource : "+imageUrl);
@@ -170,6 +178,10 @@ setInterval(function() {
          tweetItWithImageFromUrl(imageUrl, "Miaww Miaww..."+ emoji.emojify(':heart: :heart:')+"\n\n\n\n\nsource : "+imageUrl);
       }
    });
+}
 
+letsGetStarted();
 
-}, 1000*600);
+setInterval(function() {
+   letsGetStarted();
+}, 1000*900);
