@@ -64,13 +64,13 @@ function tweetItWithImageFromUrl(url, text) {
 
             T.post('media/metadata/create', meta_params, function (err, data, response) {
                if (!err) {
-                  var woeiid = 	23424846;
+                  var woeiid = 	1;
                   // Find Wordwide Trends
                   T.get('trends/place', { id : 	woeiid }, function(err, data, response) {
                      var trending = data[0].trends;
 
                      // now we can reference the media and post a tweet (media will attach to the tweet)
-                     var params = { status: text+"\n\n"+trending[0].name, media_ids: [mediaIdStr] };
+                     var params = { status: text+"\n\n"+trending[0].name+" "+trending[1].name+" "+trending[2].name, media_ids: [mediaIdStr] };
 
                      T.post('statuses/update', params, function (err, data, response) {
                         console.log(data);
@@ -159,7 +159,7 @@ var stream = T.stream('user')
 stream.on('follow', function (event) {
    var name = event.source.name;
    var screenName = event.source.screen_name;
-   if (screenName!="kitten_harian") {
+   if (screenName!="kitten_evriday") {
       tweetItWithImageFromUrl('https://lh6.ggpht.com/sw_iT7GZASdAYeiecsZEHJE-EgDhdK2rCWUzZOJS0OFiGpoi9qn8iMH2nuXHgWg2PA=h900', ".@"+screenName + " Hi, "+name+" Thx for following me.. "+ emoji.emojify(':heart: :heart:'));
    }
 });
@@ -182,4 +182,4 @@ setInterval(function() {
      tweetItWithImageFromUrl(imageUrl, "Miaww Miaww..."+ emoji.emojify(':heart: :heart:')+"\n\n\n\n\nsource : "+imageUrl);
    });
 
-}, 1000*60);
+}, 1000*30);
