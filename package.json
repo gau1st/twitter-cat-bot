@@ -1,0 +1,27 @@
+{
+  "name": "twitter_cat_bot",
+  "version": "0.0.1",
+  "description": "Twitter Bot",
+  "main": "bot.js",
+  "scripts": {
+    "start": "node bot.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "twitter_cat_bot"
+  },
+  "keywords": [
+    "twitter",
+    "bot"
+  ],
+  "author": "Gilang Esha Gautama",
+  "license": "ISC",
+  "dependencies": {
+    "image-downloader": "^2.0.3",
+    "node-base64-image": "^1.0.3",
+    "node-emoji": "^1.5.1",
+    "twit": "^2.2.5",
+    "xml2js": "^0.4.17"
+  }
+}
