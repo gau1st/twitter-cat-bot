@@ -98,7 +98,7 @@ function tweetItWithGif(text) {
    var filePath = './files/image.gif';
 
    T.postMediaChunked({ file_path: filePath }, function (err, data, response) {
-
+      console.log(data);
       // now we can assign alt text to the media, for use by screen readers and
       // other text-based presentations and interpreters
       var mediaIdStr = data.media_id_string;
@@ -111,9 +111,9 @@ function tweetItWithGif(text) {
             T.get('trends/place', { id : 	woeid }, function(err, data, response) {
                var trending = data[0].trends;
 
-               for (var i = 0; i < trending.length; i++) {
-                  console.log("--"+trending[i].name);
-               }
+               // for (var i = 0; i < trending.length; i++) {
+               //    console.log("--"+trending[i].name);
+               // }
 
                // now we can reference the media and post a tweet (media will attach to the tweet)
                // var params = { status: text+"\n\n"+trending[0].name+" "+trending[1].name+" "+trending[2].name, media_ids: [mediaIdStr] };
@@ -173,11 +173,11 @@ function letsGetStarted() {
                letsGetStarted();
             } else{
                console.log("yahoo!");
-               tweetItWithGif("#kitten #cat #kittenevriday #cute"+ emoji.emojify(':heart: :heart:')+"\n\n\n\n\nsource : "+imageUrl);
+               tweetItWithGif("#kittenevriday #kitten #cat #cute "+ emoji.emojify(':heart: :heart:')+"\n\n\n\n\nsource : "+imageUrl);
             }
          });
       } else {
-         tweetItWithImageFromUrl(imageUrl, "#kitten #cat #kittenevriday #cute"+ emoji.emojify(':heart: :heart:')+"\n\n\n\n\nsource : "+imageUrl);
+         tweetItWithImageFromUrl(imageUrl, "#kittenevriday #kitten #cat #cute "+ emoji.emojify(':heart: :heart:')+"\n\n\n\n\nsource : "+imageUrl);
       }
    });
 }
@@ -186,4 +186,4 @@ letsGetStarted();
 
 setInterval(function() {
    letsGetStarted();
-}, 1000*900);
+}, 1000*60*60);
