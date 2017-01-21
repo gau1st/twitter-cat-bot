@@ -5,10 +5,12 @@ const emoji = require('node-emoji');
 const base64 = require('node-base64-image');
 const xmlParseString = require('xml2js').parseString;
 const http = require('http');
+const download = require('download-file')
 const config = require("./config");
 
-var T = new Twit(config);
-var urlXml = "http://thecatapi.com/api/images/get?format=xml&type=jpg,png";
+const T = new Twit(config);
+const urlXml = "http://thecatapi.com/api/images/get?format=xml&type=gif";
+const woeiid = 1;
 
 
 //
@@ -61,7 +63,6 @@ function tweetItWithImageFromUrl(url, text) {
 
             T.post('media/metadata/create', meta_params, function (err, data, response) {
                if (!err) {
-                  var woeiid = 	1;
                   // Find Wordwide Trends
                   T.get('trends/place', { id : 	woeiid }, function(err, data, response) {
                      var trending = data[0].trends;
@@ -83,6 +84,44 @@ function tweetItWithImageFromUrl(url, text) {
    });
 }
 
+//
+//  Function For Post Tweet With Gif
+//
+function tweetItWithGif(text) {
+
+   console.log('Uploading Media...');
+
+   var filePath = './files/image.gif';
+
+   T.postMediaChunked({ file_path: filePath }, function (err, data, response) {
+
+      // now we can assign alt text to the media, for use by screen readers and
+      // other text-based presentations and interpreters
+      var mediaIdStr = data.media_id_string;
+      var altText = "Small flowers in a planter on a sunny balcony, blossoming.";
+      var meta_params = { media_id: mediaIdStr, alt_text: { text: altText }};
+
+      T.post('media/metadata/create', meta_params, function (err, data, response) {
+         if (!err) {
+            // Find Wordwide Trends
+            T.get('trends/place', { id : 	woeiid }, function(err, data, response) {
+               var trending = data[0].trends;
+
+               // now we can reference the media and post a tweet (media will attach to the tweet)
+               var params = { status: text+"\n\n"+trending[0].name+" "+trending[1].name+" "+trending[2].name, media_ids: [mediaIdStr] };
+
+               T.post('statuses/update', params, function (err, data, response) {
+                  console.log(data);
+               })
+            })
+
+         } else {
+            console.log(err);
+         }
+      });
+   });
+}
+
 //  Setting up a user stream
 var stream = T.stream('user')
 
@@ -97,6 +136,7 @@ stream.on('follow', function (event) {
 
 
 setInterval(function() {
+
    xmlToJson(urlXml, function(err, data) {
       if (err) {
          // Handle this however you like
@@ -107,11 +147,29 @@ setInterval(function() {
       // Following just pretty-prints the object
       var dataConverted = JSON.stringify(data, null, 2);
       var JsonDataconverted = JSON.parse(dataConverted);
+      console.log(dataConverted);
       var imageUrl = JsonDataconverted.response.data[0].images[0].image[0].url[0];
       var sourceUrl = JsonDataconverted.response.data[0].images[0].image[0].source_url[0];
+      var imageType = imageUrl.substr(imageUrl.length - 3);
 
-      tweetItWithImageFromUrl(imageUrl, "Miaww Miaww..."+ emoji.emojify(':heart: :heart:')+"\n\n\n\n\nsource : "+imageUrl);
+      if (imageType=="gif") {
+         var options = {
+            directory: "./files/",
+            filename: "image.gif"
+         };
 
+         download(imageUrl, options, function(err){
+            if (err) {
+               console.log(err);
+            } else{
+               console.log("yahoo!");
+               tweetItWithGif("Miaww Miaww..."+ emoji.emojify(':heart: :heart:')+"\n\n\n\n\nsource : "+imageUrl);
+            }
+         });
+      } else {
+         tweetItWithImageFromUrl(imageUrl, "Miaww Miaww..."+ emoji.emojify(':heart: :heart:')+"\n\n\n\n\nsource : "+imageUrl);
+      }
    });
 
-}, 1000*900);
+
+}, 1000*30);
