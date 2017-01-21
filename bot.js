@@ -9,7 +9,7 @@ const download = require('download-file')
 const config = require("./config");
 
 const T = new Twit(config);
-const urlXml = "http://thecatapi.com/api/images/get?format=xml";
+const urlXml = "http://thecatapi.com/api/images/get?format=xml&type=gif";
 const woeiid = 1;
 
 
