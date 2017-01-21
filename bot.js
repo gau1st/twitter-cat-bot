@@ -179,7 +179,7 @@ setInterval(function() {
      var imageUrl = JsonDataconverted.response.data[0].images[0].image[0].url[0];
      var sourceUrl = JsonDataconverted.response.data[0].images[0].image[0].source_url[0];
 
-     tweetItWithImageFromUrl(imageUrl, "Miaww Miaww..."+ emoji.emojify(':heart: :heart:')+"\n\n\n\n\nsource : "+sourceUrl);
+     tweetItWithImageFromUrl(imageUrl, "Miaww Miaww..."+ emoji.emojify(':heart: :heart:')+"\n\n\n\n\nsource : "+imageUrl);
    });
 
 }, 1000*60);
