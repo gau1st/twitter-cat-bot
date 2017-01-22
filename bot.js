@@ -183,4 +183,4 @@ letsGetStarted();
 
 setInterval(function() {
    letsGetStarted();
-}, 1000*60*60);
+}, 1000*60*15);
