@@ -130,16 +130,16 @@ function tweetItWithGif(text) {
 }
 
 //  Setting up a user stream
-// var stream = T.stream('user')
+var stream = T.stream('user')
 
 // Anytime someone follows me
-// stream.on('follow', function (event) {
-//    var name = event.source.name;
-//    var screenName = event.source.screen_name;
-//    if (screenName!="kitten_evriday") {
-//       tweetItWithImageFromUrl('https://lh6.ggpht.com/sw_iT7GZASdAYeiecsZEHJE-EgDhdK2rCWUzZOJS0OFiGpoi9qn8iMH2nuXHgWg2PA=h900', ".@"+screenName + " Hi, "+name+", Thx for following me.. "+ emoji.emojify(':heart: :heart:'));
-//    }
-// });
+stream.on('follow', function (event) {
+   var name = event.source.name;
+   var screenName = event.source.screen_name;
+   if (screenName!="kitten_evriday") {
+      tweetItWithImageFromUrl('https://lh6.ggpht.com/sw_iT7GZASdAYeiecsZEHJE-EgDhdK2rCWUzZOJS0OFiGpoi9qn8iMH2nuXHgWg2PA=h900', "@"+screenName + " Hi, "+name+", Thx for following me.. "+ emoji.emojify(':heart: :heart:'));
+   }
+});
 
 function letsGetStarted() {
    xmlToJson(urlXml, function(err, data) {
