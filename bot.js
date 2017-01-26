@@ -122,11 +122,12 @@ function tweetItWithGif(text) {
                      letsGetStarted();
                   } else {
                      console.log(data);
-                     postCount += 1;
-                     if (postCount == 2) {
-                        tweetYoutubeVideo();
-                        postCount = 0;
-                     }
+                     tweetYoutubeVideo();
+                     // postCount += 1;
+                     // if (postCount == 2) {
+                     //    tweetYoutubeVideo();
+                     //    postCount = 0;
+                     // }
                   }
                })
             })
@@ -199,7 +200,7 @@ function tweetYoutubeVideo() {
       // }
 
       // now we can reference the media and post a tweet (media will attach to the tweet)
-      var params = { status: "Funny cats compilation \n\n https://youtu.be/qowON2_ki_U"+"\n\n #kittenevriday #kitten #cat #cute "+trending[0].name+" "+trending[1].name+" "+trending[2].name };
+      var params = { status: "Funny cats compilation \n\nhttps://youtu.be/qowON2_ki_U"+"\n\n#kittenevriday #kitten #cat #cute "+trending[0].name+" "+trending[1].name+" "+trending[2].name };
 
       T.post('statuses/update', params, function (err, data, response) {
          if (err) {
