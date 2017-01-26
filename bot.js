@@ -10,7 +10,8 @@ const config = require("./config");
 
 const T = new Twit(config);
 const urlXml = "http://thecatapi.com/api/images/get?format=xml&type=gif";
-const woeid = 23424846;
+const woeid = 1;
+var postCount = 0;
 
 
 //
@@ -117,7 +118,16 @@ function tweetItWithGif(text) {
                var params = { status: text, media_ids: [mediaIdStr] };
 
                T.post('statuses/update', params, function (err, data, response) {
-                  console.log(data);
+                  if (err) {
+                     letsGetStarted();
+                  } else {
+                     console.log(data);
+                     postCount += 1;
+                     if (postCount == 2) {
+                        tweetYoutubeVideo();
+                        postCount = 0;
+                     }
+                  }
                })
             })
 
@@ -176,6 +186,28 @@ function letsGetStarted() {
       } else {
          tweetItWithImageFromUrl(imageUrl, "#kittenevriday #kitten #cat #cute "+ emoji.emojify(':heart: :heart:')+"\n\n\n\n\nsource : "+imageUrl);
       }
+   });
+}
+
+function tweetYoutubeVideo() {
+   // Find Wordwide Trends
+   T.get('trends/place', { id : 	woeid }, function(err, data, response) {
+      var trending = data[0].trends;
+
+      // for (var i = 0; i < trending.length; i++) {
+      //    console.log("--"+trending[i].name);
+      // }
+
+      // now we can reference the media and post a tweet (media will attach to the tweet)
+      var params = { status: "Funny cats compilation https://youtu.be/qowON2_ki_U"+"\n\n"+trending[0].name+" "+trending[1].name+" "+trending[2].name };
+
+      T.post('statuses/update', params, function (err, data, response) {
+         if (err) {
+            tweetYoutubeVideo()
+         } else {
+            console.log(data);
+         }
+      })
    });
 }
 
