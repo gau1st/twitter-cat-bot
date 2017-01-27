@@ -191,24 +191,15 @@ function letsGetStarted() {
 }
 
 function tweetYoutubeVideo() {
-   // Find Wordwide Trends
-   T.get('trends/place', { id : 	woeid }, function(err, data, response) {
-      var trending = data[0].trends;
+   // now we can reference the media and post a tweet (media will attach to the tweet)
+   var params = { status: "Funny cats compilation \n\nhttps://youtu.be/qowON2_ki_U"+"\n\n#kittenevriday #kitten #cat #cute"};
 
-      // for (var i = 0; i < trending.length; i++) {
-      //    console.log("--"+trending[i].name);
-      // }
-
-      // now we can reference the media and post a tweet (media will attach to the tweet)
-      var params = { status: "Funny cats compilation \n\nhttps://youtu.be/qowON2_ki_U"+"\n\n#kittenevriday #kitten #cat #cute"};
-
-      T.post('statuses/update', params, function (err, data, response) {
-         if (err) {
-            tweetYoutubeVideo()
-         } else {
-            console.log(data);
-         }
-      })
+   T.post('statuses/update', params, function (err, data, response) {
+      if (err) {
+         tweetYoutubeVideo()
+      } else {
+         console.log(data);
+      }
    });
 }
 
