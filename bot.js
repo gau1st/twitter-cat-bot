@@ -203,7 +203,7 @@ function tweetYoutubeVideo() {
    });
 }
 
-letsGetStarted();
+tweetYoutubeVideo();
 
 setInterval(function() {
    letsGetStarted();
